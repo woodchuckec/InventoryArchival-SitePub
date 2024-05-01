@@ -28,8 +28,8 @@ language = "nodejs"
 
 [deployment]
 build = ["npm", "run", "build"]
-deploymentTarget = "static"
-publicDir = "dist"
+deploymentTarget = "cloudrun"
+run = ["sh", "-c", "npm run dev"]
 
 [[ports]]
 localPort = 5173

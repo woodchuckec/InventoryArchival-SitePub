@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useParams } from "react-router-dom";
 import {List} from "antd";
 
@@ -12,7 +12,7 @@ const AllListings = () => {
     }]);
 
     async function getListing() {
-        const response = await fetch("https://archive-db-api-woodchuckec.replit.app/api/listing/allListings/", {
+        const response = await fetch("https://yzy-archive-api.replit.app/api/listing/allListings/", {
             "method": "GET"
             })
             .then((res) => res.json())
@@ -43,15 +43,7 @@ const AllListings = () => {
                 renderItem={(item) => {
                     return (
                         <List.Item>
-                            {item.title}
-                            <br></br>
-                            Description: {item.description}
-                            <br></br>
-                            Price: {item.price}$
-                            <br></br>
-                            Size: {item.size}
-                            <br></br>
-                            <a href={"https://grailed.com/listing/" + item.id}>Link to Listing</a>
+                            <a href={'../listing/' + item.id}>{item.title}</a>
                         </List.Item>
                     );
                 }}/>

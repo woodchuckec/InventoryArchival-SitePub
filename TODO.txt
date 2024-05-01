@@ -1,0 +1,11 @@
+1. Create page for admin creation and editing of entries
+    also need to bring in photos
+        from the API side, endpoint to auto-add listing info from id and populate photos
+        need endpoint to get all photots
+        add tag system?
+        add comment system?
+2. Rename from listings to -> page? item?
+3. Beautify how all listings are displayed
+4. Combine the demo HomePage into all alllistings
+    zebra table with no header?
+    list? show icon

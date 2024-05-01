@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useParams } from "react-router-dom";
 
 const Listing = () => {
@@ -13,7 +13,7 @@ const Listing = () => {
     let { listingId } = useParams();
 
     async function getListing() {
-        const response = await fetch("https://archive-db-api-woodchuckec.replit.app/api/listing/listing/" + listingId, {
+        const response = await fetch("https://yzy-archive-api.replit.app/api/listing/listing/" + listingId, {
             "method": "GET"
             })
             .then((res) => res.json())
@@ -49,7 +49,7 @@ const Listing = () => {
             <p>{data.description}</p>
             <p>Price: ${data.price}</p>
             <p>Size: {data.size}</p>
-            <a href={"https://grailed.com/listing/" + data.id}>Link to Listing</a>
+            <a href={"https://grailed.com/listings/" + data.id}>Link to Listing</a>
         </div>
     );
 }

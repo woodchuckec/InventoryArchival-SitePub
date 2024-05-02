@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useParams } from "react-router-dom";
+import ListingPhotoCarousel from "./ListingPhotoCarousel";
 
 const Listing = () => {
     const [data, setData] = useState({
@@ -50,6 +51,7 @@ const Listing = () => {
             <p>Price: ${data.price}</p>
             <p>Size: {data.size}</p>
             <a href={"https://grailed.com/listings/" + data.id}>Link to Listing</a>
+            <ListingPhotoCarousel />
         </div>
     );
 }

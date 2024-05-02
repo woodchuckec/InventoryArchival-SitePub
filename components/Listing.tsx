@@ -45,7 +45,7 @@ const Listing = () => {
     }, [listingId]);
 
     return (
-        <div>
+        <div style={{textAlign:"center"}}>
             <h3>{data.title}</h3>
             <p>{data.description}</p>
             <p>Price: ${data.price}</p>

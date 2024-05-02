@@ -1,6 +1,5 @@
 import { useMemo, useState } from 'react';
-import { useParams } from "react-router-dom";
-import {List} from "antd";
+import {List, Col, Row, Input} from "antd";
 
 const AllListings = () => {
     const [data, setData] = useState([{
@@ -8,11 +7,21 @@ const AllListings = () => {
         title: "",
         description: "",
         price: 0,
-        size: ""
+        size: "",
+        url: ""
+    }]);
+
+    const [displayData, setDisplayData] = useState([{
+        id:0,
+        title: "",
+        description: "",
+        price: 0,
+        size: "",
+        url: ""
     }]);
 
     async function getListing() {
-        const response = await fetch("https://yzy-archive-api.replit.app/api/listing/allListings/", {
+        const response = await fetch("https://yzy-archive-api.replit.app/api/listing/allListingsWithThumbnails/", {
             "method": "GET"
             })
             .then((res) => res.json())
@@ -23,27 +32,39 @@ const AllListings = () => {
                     title: "Error",
                     description: "Error",
                     price: 0,
-                    size: "Error"
+                    size: "Error",
+                    url: "Error"
                 };
             });
-        console.log(response);
         return response;
+    }
+
+    function handleSearchChange(value) {
+        const searched = data.filter(item => item.title.toLowerCase().includes(value.target.value.toLowerCase()));
+        setDisplayData(searched);
     }
     
     useMemo(() => {
         (async () => {
             const listing = await getListing();
             setData(listing);
+            setDisplayData(data);
         })();
     }, []);
-
+    
     return (
         <div>
-            <List dataSource={data}
+            <Input placeholder='Search' onChange={handleSearchChange}/>
+            <List dataSource={displayData}
                 renderItem={(item) => {
                     return (
                         <List.Item>
-                            <a href={'../listing/' + item.id}>{item.title}</a>
+                            <a href={'../listing/' + item.id} target="_blank">
+                                <Row>
+                                  <Col span={12}><img src={item.url} style={{width:"50%", height:"auto"}}/></Col>
+                                  <Col span={12}>{item.title}</Col>
+                                </Row>
+                            </a>
                         </List.Item>
                     );
                 }}/>

@@ -1,56 +1,61 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, BaseSyntheticEvent } from 'react';
 import {List, Col, Row, Input} from "antd";
 
-const AllListings = () => {
+const AllItems = () => {
     const [data, setData] = useState([{
         id:0,
-        title: "",
+        chaseId:"",
+        name: "",
         description: "",
-        price: 0,
         size: "",
-        url: ""
+        box: "",
     }]);
 
     const [displayData, setDisplayData] = useState([{
         id:0,
-        title: "",
+        chaseId:"",
+        name: "",
         description: "",
-        price: 0,
         size: "",
-        url: ""
+        box: "",
     }]);
 
     async function getListing() {
-        const response = await fetch("https://yzy-archive-api.replit.app/api/listing/allListingsWithThumbnails/", {
+        const response = await fetch("https://inventory-archival-api-woodchuckec.replit.app/api/item/allItems", {
             "method": "GET"
             })
             .then((res) => res.json())
             .catch((error) => {
                 console.log(error);
                 return {
-                    id: 0,
-                    title: "Error",
-                    description: "Error",
-                    price: 0,
-                    size: "Error",
-                    url: "Error"
+                    id:0,
+                        chaseId:"",
+                        name: "",
+                        description: "",
+                        size: "",
+                        box: "",
                 };
             });
         return response;
     }
 
-    function handleSearchChange(value) {
-        const searched = data.filter(item => item.title.toLowerCase().includes(value.target.value.toLowerCase()));
+    const handleSearchChange = (event : BaseSyntheticEvent) => {
+        const searched = data.filter(item => item.name.toLowerCase().includes(event.target.value.toLowerCase()));
         setDisplayData(searched);
     }
     
     useMemo(() => {
         (async () => {
-            const listing = await getListing();
+            const listing = await getListing().catch(err => {
+                setData([]);
+                setDisplayData([]);
+            });
             setData(listing);
-            setDisplayData(data);
+            setDisplayData(listing);
         })();
     }, []);
+
+    //<Col span={12}><img src={item.url} style={{width:"50%", height:"auto"}}/></Col>
     
     return (
         <div>
@@ -59,10 +64,9 @@ const AllListings = () => {
                 renderItem={(item) => {
                     return (
                         <List.Item>
-                            <a href={'../listing/' + item.id} target="_blank">
+                            <a href={'../item/' + item.id} target="_blank">
                                 <Row>
-                                  <Col span={12}><img src={item.url} style={{width:"50%", height:"auto"}}/></Col>
-                                  <Col span={12}>{item.title}</Col>
+                                  <Col span={12}>{item.chaseId}</Col>
                                 </Row>
                             </a>
                         </List.Item>
@@ -72,4 +76,4 @@ const AllListings = () => {
     );
 }
 
-export default AllListings;
+export default AllItems;

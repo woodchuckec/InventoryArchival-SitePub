@@ -44,3 +44,7 @@
     line-height: normal;
     color: #000000;
 }
+
+.password-container {
+    min-width: 100vw !important;
+}
